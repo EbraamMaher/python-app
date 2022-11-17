@@ -1,24 +1,22 @@
 pipeline{
 
     agent {label 'agent'}
-     environment {
-    GCLOUD=credentials('gcloud')
-    CONFIG=credentials('kubernetes')
+    
     }
     stages{
         stage('Build image'){
             steps{
-                       // withCredentials([file(credentialsId: 'gcloud', variable: 'k')]){
+                        withCredentials([file(credentialsId: 'gcloud', variable: 'k')]){
                             // sh "kubectl config set-context $(kubectl config current-context)"   // --namespace=${namespace}
 
                             sh """
-                              gcloud auth activate-service-account terraform@gproject-368612.iam.gserviceaccount.com --key-file="$GCLOUD"
+                              gcloud auth activate-service-account --key-file="$k"
                  
                               gcloud container clusters get-credentials app-cluster --region europe-west3 --project gproject-368612
                               sh "docker ps"
                               sh "kubectl version"
                               """
-         // }
+          }
             
             
             }
