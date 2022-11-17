@@ -9,7 +9,7 @@ pipeline{
             }
             post {
                 success {
-       slackSend color: "good", message: "successfully built"
+      echo "good", message: "successfully built"
                 }
                 
                 }
