@@ -6,6 +6,7 @@ pipeline{
             steps{
                 
                 echo "Executing pipline"
+                docker ps
             }
             post {
                 success {
