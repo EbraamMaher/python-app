@@ -6,7 +6,7 @@ pipeline{
         stage('Build image'){
             steps{
                
-                
+                sh "docker ls"
                 sh "kubectl get pods -A"
           
             
