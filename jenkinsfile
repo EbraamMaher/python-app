@@ -5,11 +5,11 @@ pipeline{
     stages{
         stage('Build image'){
             steps{
-                withCredentials(usernameColonPassword(credentialsId: 'docker', userVariable: 'username',passwordVariable: 'password')) {
+               
                 sh "docker image ls"
                 sh "docker ps"
           
-            }
+            
             
             }
             post {
