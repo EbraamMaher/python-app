@@ -9,7 +9,9 @@ pipeline {
               withCredentials([usernamePassword(credentialsId: 'docker', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) { 
 
               sh """
-                docker ps
+               
+                docker login -u ${USERNAME} -p ${PASSWORD}
+                docker ps 
                 """
                     }
                         } 
@@ -20,13 +22,15 @@ pipeline {
         stage('Deploy') {
           steps{
             script {
-                 
+                 withCredentials([file(credentialsId: 'gcloud', variable: 'omar')]){
+                            // sh "kubectl config set-context $(kubectl config current-context)"   // --namespace=${namespace}
 
                             sh """
-                      
+                              gcloud auth activate-service-account --key-file="$omar"
+                              gcloud container clusters get-credentials app-cluster --region europe-west3 --project gproject-368612
                               kubectl get pods -A
                             """
-              
+                }
 
               }
             }
