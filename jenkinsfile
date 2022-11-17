@@ -1,16 +1,20 @@
 pipeline{
 
     agent {label 'agent'}
+    
     stages{
-        stage('build'){
+        stage('Build image'){
             steps{
-                
-                echo "Executing pipline"
-                kubectl get pods
+                withCredentials(usernameColonPassword(credentialsId: 'docker', userVariable: 'username',passwordVariable: 'password')) {
+                sh "docker image ls"
+                sh "docker ps"
+          
+            }
+            
             }
             post {
                 success {
-      echo "successfully built"
+                    sh "docker version"
                 }
                 
                 }
