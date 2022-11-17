@@ -1,34 +1,39 @@
-
-
-pipeline{
+pipeline {
 
     agent {label 'agent'}
-    
-    
+
     stages{
-        stage('Build image'){
-            steps{
-                        withCredentials([file(credentialsId: 'gcloud', variable: 'k')]){
+        stage('Build') {
+          steps {
+            script {
+              withCredentials([usernamePassword(credentialsId: 'docker', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) { 
+
+              sh """
+                docker ps
+                """
+                    }
+                        } 
+                }
+            }
+    
+
+        stage('Deploy') {
+          steps{
+            script {
+                 withCredentials([file(credentialsId: 'gcloud', variable: 'omar')]){
                             // sh "kubectl config set-context $(kubectl config current-context)"   // --namespace=${namespace}
 
                             sh """
-                              gcloud auth activate-service-account --key-file="$k"
-                 
+                              gcloud auth activate-service-account --key-file="$omar"
                               gcloud container clusters get-credentials app-cluster --region europe-west3 --project gproject-368612
-                              sh "docker ps"
-                              sh "kubectl version"
-                              """
-          }
-            
-            
-            }
-        }
-            post {
-                success {
-                    sh "docker version"
-                }
-                
+                              kubectl get pods -A
+                            """
                 }
 
+              }
+            }
+          }
         }
+
 }
+        
