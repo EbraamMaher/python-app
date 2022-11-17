@@ -33,7 +33,7 @@ pipeline {
                              #ls
                              #cat deployment.yaml.tmp | envsubst > deployment.yaml
                              #rm -f deployment.yaml.tmp
-                             kubectl apply -f deployment 
+                             kubectl apply -f deployment.yaml
                             """
                           
                              
