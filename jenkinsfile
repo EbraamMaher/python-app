@@ -1,0 +1,20 @@
+pipeline{
+
+    agent none
+    stages{
+        stage('print'){
+            steps{
+                echo 'Here the branch name :'
+                echo "Executing pipline for branch $BRANCH_NAME"
+            }
+            post {
+                success {
+       slackSend color: "good", message: "successfully built"
+                }
+                
+                }
+
+        }
+
+    }
+}
