@@ -2,11 +2,11 @@ pipeline{
 
     agent {label 'agent'}
     stages{
-        stage('print'){
+        stage('build'){
             steps{
                 
                 echo "Executing pipline"
-                docker version
+                kubectl get pods
             }
             post {
                 success {
