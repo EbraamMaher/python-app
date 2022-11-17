@@ -1,3 +1,4 @@
+
 pipeline{
 
     agent {label 'agent'}
@@ -20,6 +21,7 @@ pipeline{
             
             
             }
+        }
             post {
                 success {
                     sh "docker version"
