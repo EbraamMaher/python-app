@@ -4,8 +4,8 @@ pipeline{
     stages{
         stage('print'){
             steps{
-                echo 'Here the branch name :'
-                echo "Executing pipline for branch $BRANCH_NAME"
+                
+                echo "Executing pipline"
             }
             post {
                 success {
