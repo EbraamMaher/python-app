@@ -9,9 +9,11 @@ pipeline {
               withCredentials([usernamePassword(credentialsId: 'docker', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) { 
 
               sh """
-               
                 docker login -u ${USERNAME} -p ${PASSWORD}
-                docker ps 
+                docker build .  -t ebraammaher/webapp:V${BUILD_NUMBER}
+                docker images
+                docker push ebraammaher/webapp:V${BUILD_NUMBER}
+                echo ${BUILD_NUMBER} > bn.txt
                 """
                     }
                         } 
@@ -22,14 +24,20 @@ pipeline {
         stage('Deploy') {
           steps{
             script {
-                 withCredentials([file(credentialsId: 'omar', variable: 'omar')]){
-                            // sh "kubectl config set-context $(kubectl config current-context)"   // --namespace=${namespace}
-
+                 withCredentials([file(credentialsId: 'gcp-credentials', variable: 'gc')]){
                             sh """
-                             gcloud auth activate-service-account --key-file="$omar"
+                             gcloud auth activate-service-account --key-file="$gc"
                              gcloud container clusters get-credentials app-cluster --region europe-west3 --project gproject-368612
-                              kubectl get pods -A
+                             export BUILD_NUMBER=\$(cat bn.txt)
+                             mv deployment.yaml deployment.yaml.tmp
+                             cat deployment.yaml.tmp | envsubst > deployment.yaml
+                             rm -f deployment.yaml.tmp
+                             kubectl apply -f deployment 
                             """
+                          
+                             
+
+                            
                 }
 
               }
