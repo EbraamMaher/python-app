@@ -27,7 +27,7 @@ pipeline {
 
                             sh """
                               gcloud auth activate-service-account --key-file="$omar"
-                              gcloud container clusters get-credentials app-cluster --region europe-west3 --project gproject-368612
+                              gcloud container clusters get-credentials app-cluster --region europe-west3 --project gproject-368612 
                               kubectl get pods -A
                             """
                 }
