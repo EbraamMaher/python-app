@@ -22,11 +22,12 @@ pipeline {
         stage('Deploy') {
           steps{
             script {
-                 withCredentials([file(credentialsId: 'baz', variable: 'omar')]){
+                 withCredentials([file(credentialsId: 'omar', variable: 'omar')]){
                             // sh "kubectl config set-context $(kubectl config current-context)"   // --namespace=${namespace}
 
                             sh """
-                             
+                             gcloud auth activate-service-account --key-file="$omar"
+                             gcloud container clusters get-credentials app-cluster --region europe-west3 --project gproject-368612
                               kubectl get pods -A
                             """
                 }
