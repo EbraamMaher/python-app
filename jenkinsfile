@@ -1,4 +1,5 @@
 
+
 pipeline{
 
     agent {label 'agent'}
@@ -30,6 +31,3 @@ pipeline{
                 }
 
         }
-
-    }
-}
