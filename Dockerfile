@@ -1,4 +1,11 @@
-FROM python
-#RUN pip install pandas
-COPY . .
-ENTRYPOINT ["python3","code.py"]
+FROM ubuntu
+
+RUN apt-get update
+
+RUN apt-get install nginx -y
+
+COPY index.html /var/www/html/
+
+EXPOSE 80
+
+CMD ["nginx","-g","daemon off;"]
