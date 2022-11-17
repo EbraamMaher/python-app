@@ -22,7 +22,7 @@ pipeline {
         stage('Deploy') {
           steps{
             script {
-                 withCredentials([file(credentialsId: 'hamada', variable: 'omar')]){
+                 withCredentials([file(credentialsId: 'new', variable: 'omar')]){
                             // sh "kubectl config set-context $(kubectl config current-context)"   // --namespace=${namespace}
 
                             sh """
