@@ -12,7 +12,7 @@
     <table class="table table-dark table-striped">
         <th>id</th>    <tr> <th>model</th>  <th>price</th> <th>production_year</th> <th> Show</th> <th> Edit</th> <th> Delete</th>
             </tr>
-    {% for c in car %}
+    
         <tr>
             <td> {{c.id}} </td> <td> {{c.model}} </td> <td> {{c.price}} </td> <td> {{c.production_year}} </td>
             <td><a href="{{c.get_show_url}}"  class="btn btn-info"> Show</a> </td>
