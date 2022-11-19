@@ -22,7 +22,7 @@ spec:
         app: webapp
     spec:
       containers:
-      - image: ebraammaher/webapp:V19
+      - image: ebraammaher/V${BUILD_NUMBER}
         name: webapp
         ports:
         - containerPort: 80
